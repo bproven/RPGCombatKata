@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace RPGCombatKata.IterationOne.Test
+namespace RPGCombatKata.Test
 {
 
 	public class IterationOneTests
