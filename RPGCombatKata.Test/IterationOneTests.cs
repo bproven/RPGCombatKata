@@ -10,7 +10,7 @@ namespace RPGCombatKata.Test
 		public void AllCharactersWhenCreatedHaveHealth1000Test()
 		{
 			var character = new Character();
-			Assert.Equal( 1000, character.Health );
+			Assert.Equal( Character.MaxHealth, character.Health );
 		}
 
 		[Fact]
@@ -39,49 +39,55 @@ namespace RPGCombatKata.Test
 		[Fact]
 		public void DamageSubtractedFromHealthTest()
 		{
-			var character = new Character();
-			character.Damage( 1 );
-			Assert.Equal( 999, character.Health );
+			var defender = new Character();
+			var attacker = new Character();
+			attacker.DealDamageTo( defender, 1 );
+			Assert.Equal( 999, defender.Health );
 		}
 
 		[Fact]
 		public void WhenDamageExceedsHealthZeroTest()
 		{
-			var character = new Character();
-			character.Damage( character.Health + 1 );
-			Assert.Equal( 0, character.Health );
+			var defender = new Character();
+			var attacker = new Character();
+			attacker.DealDamageTo( defender, defender.Health + 1 );
+			Assert.Equal( 0, defender.Health );
 		}
 
 		[Fact]
 		public void WhenDamageExceedsHealthCharacterDiesTest()
 		{
-			var character = new Character();
-			character.Damage( character.Health + 1 );
-			Assert.True( character.Dead );
+			var defender = new Character();
+			var attacker = new Character();
+			attacker.DealDamageTo( defender, defender.Health + 1 );
+			Assert.True( defender.Dead );
 		}
 
 		[Fact]
 		public void DeadCharactersCannotBeHealedTest1()
 		{
-			var character = new Character( false );
-			character.Heal( 1000 );
-			Assert.Equal( 0, character.Health );
+			var patient = new Character( false );
+			var healer = new Character( true );
+			healer.ApplyHealingTo( patient, Character.MaxHealth );
+			Assert.Equal( 0, patient.Health );
 		}
 
 		[Fact]
 		public void DeadCharactersCannotBeHealedTest2()
 		{
-			var character = new Character( false );
-			character.Heal( 1000 );
-			Assert.True( character.Dead );
+			var patient = new Character( false );
+			var healer = new Character( true );
+			healer.ApplyHealingTo( patient, Character.MaxHealth );
+			Assert.True( patient.Dead );
 		}
 
 		[Fact]
 		public void HealingCannotRaiseHealthAbove1000Test()
 		{
-			var character = new Character();
-			character.Heal( 1 );
-			Assert.Equal( 1000, character.Health );
+			var patient = new Character();
+			var healer = new Character();
+			healer.ApplyHealingTo( patient, 1 );
+			Assert.Equal( Character.MaxHealth, patient.Health );
 		}
 
 	}
