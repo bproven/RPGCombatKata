@@ -1,5 +1,4 @@
-﻿
-namespace RPGCombatKata
+﻿namespace RPGCombatKata
 {
 
 	public class Character
@@ -23,6 +22,8 @@ namespace RPGCombatKata
 
 		public CharacterType Type { get; init; } = CharacterType.MeleeFighter;
 
+		public ISet<Faction> Factions { get; } = new HashSet<Faction>();
+
 		public double MaxRange => Type switch
 		{
 			CharacterType.MeleeFighter => MaxMeleeFighterRange,
@@ -36,14 +37,10 @@ namespace RPGCombatKata
 			Level = 1;
 		}
 
-		private void ReceiveDamageFrom( Character attacker, int damage )
+		private bool IsInRangeFrom( Character attacker ) => attacker.DistanceTo( this ) <= attacker.MaxRange;
+
+		private int AdjustDamageFrom( Character attacker, int damage )
 		{
-
-			if ( attacker.DistanceTo( this ) > attacker.MaxRange )
-			{
-				return;
-			}
-
 			if ( Level - attacker.Level >= 5 )
 			{
 				damage /= 2;
@@ -52,11 +49,23 @@ namespace RPGCombatKata
 			{
 				damage += damage / 2;
 			}
+			return damage;
+		}
 
-			if ( attacker == this )
+		private void ReceiveDamageFrom( Character attacker, int damage )
+		{
+
+			if ( !IsInRangeFrom( attacker ) )
 			{
 				return;
 			}
+
+			if ( attacker.IsAlliesWith( this ) )
+			{
+				return;
+			}
+
+			damage = AdjustDamageFrom( attacker, damage );
 
 			if ( damage > Health )
 			{
@@ -74,10 +83,12 @@ namespace RPGCombatKata
 
 		private void ReceiveHealingFrom( Character healer, int health )
 		{
-			if ( healer != this )
+
+			if ( !IsAlliesWith( healer ) )
 			{
 				return;
 			}
+
 			if ( Alive )
 			{
 				if ( Health + health > MaxHealth )
@@ -89,11 +100,24 @@ namespace RPGCombatKata
 					Health += health;
 				}
 			}
+
 		}
 
 		public void ApplyHealingTo( Character patient, int health ) => patient.ReceiveHealingFrom( this, health );
 
 		public double DistanceTo( Character character ) => character.Position.Subtract( Position ).Length;
+
+		public void Join( params Faction[] factions ) => Join( (IEnumerable<Faction>)factions );
+
+		public void Join( IEnumerable<Faction> factions )
+		{
+			foreach ( Faction f in factions )
+			{
+				Factions.Add( f );
+			}
+		}
+
+		public bool IsAlliesWith( Character character ) => character == this || Factions.Intersect( character.Factions ).Any();
 
 	}
 
