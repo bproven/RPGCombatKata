@@ -3,7 +3,7 @@ using Xunit;
 namespace RPGCombatKata.Test
 {
 
-	public class IterationOneTests
+	public class Iteration1Tests
 	{
 
 		[Fact]
