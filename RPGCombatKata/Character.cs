@@ -43,20 +43,21 @@
 			Level = 1;
 		}
 
-		public int AdjustDamageFrom( Character attacker, int damage )
+		public int AdjustDamageFrom( ITarget attacker, int damage )
 		{
-			if ( Level - attacker.Level >= 5 )
+			if ( attacker is Character characterAttacker )
 			{
-				damage /= 2;
-			}
-			else if ( attacker.Level - Level >= 5 )
-			{
-				damage += damage / 2;
+				if ( Level - characterAttacker.Level >= 5 )
+				{
+					damage /= 2;
+				}
+				else if ( characterAttacker.Level - Level >= 5 )
+				{
+					damage += damage / 2;
+				}
 			}
 			return damage;
 		}
-
-		public void DealDamageTo( ITarget defender, int damage ) => defender.ReceiveDamageFrom( this, damage );
 
 		public void ApplyHealingTo( ITarget patient, int health ) => patient.ReceiveHealingFrom( this, health );
 
@@ -72,7 +73,7 @@
 			}
 		}
 
-		public bool IsAlliesWith( Character character ) => character == this || Factions.Intersect( character.Factions ).Any();
+		public bool IsAlliesWith( ITarget character ) => character == this || Factions.Intersect( character.Factions ).Any();
 
 	}
 

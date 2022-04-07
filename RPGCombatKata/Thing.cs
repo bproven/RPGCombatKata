@@ -16,6 +16,10 @@
 
 		public Point Position { get; private set; } = new Point { X = 0.0, Y = 0.0 };
 
+		public ISet<Faction> Factions { get; } = new HashSet<Faction>();
+
+		public int AdjustDamageFrom( ITarget attacker, int damage ) => damage;
+
 		public Thing( int health = MaxHealth )
 		{
 			Health = health;

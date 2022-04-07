@@ -16,18 +16,24 @@ namespace RPGCombatKata
 
 		Point Position { get; }
 
-		int AdjustDamageFrom( Character attacker, int damage ) => damage;
+		public double MaxRange => 0.0;
 
-		bool IsAlliesWith( Character character ) => false;
+		ISet<Faction> Factions { get; }
+
+		int AdjustDamageFrom( ITarget attacker, int damage );
+
+		bool IsAlliesWith( ITarget character ) => false;
 
 	}
 
 	public static class TargetExtensions
 	{
 
-		public static bool IsInRangeFrom( this ITarget target, Character attacker ) => attacker.DistanceTo( target ) <= attacker.MaxRange;
+		public static double DistanceTo( this ITarget source, ITarget target ) => target.Position.Subtract( source.Position ).Length;
 
-		public static void ReceiveDamageFrom( this ITarget target, Character attacker, int damage )
+		public static bool IsInRangeFrom( this ITarget target, ITarget attacker ) => attacker.DistanceTo( target ) <= attacker.MaxRange;
+
+		public static void ReceiveDamageFrom( this ITarget target, ITarget attacker, int damage )
 		{
 
 			if ( !target.IsInRangeFrom( attacker ) )
@@ -53,6 +59,9 @@ namespace RPGCombatKata
 			}
 
 		}
+
+		public static void DealDamageTo( this ITarget attacker, ITarget defender, int damage ) => defender.ReceiveDamageFrom( attacker, damage );
+
 
 		public static void ReceiveHealingFrom( this ITarget target, Character healer, int health )
 		{
