@@ -22,6 +22,8 @@
 
 		public bool IsNeutral => !Factions.Any();
 
+		public bool IsDestroyed => Health == 0;
+
 		public int AdjustDamageFrom( ITarget attacker, int damage ) => damage;
 
 		public Thing( int health = MaxHealth )

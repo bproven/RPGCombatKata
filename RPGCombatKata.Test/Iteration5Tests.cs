@@ -82,7 +82,10 @@ namespace RPGCombatKata.Test
 		[Fact]
 		public void ThingsReducedToZeroHealthAreDestroyedTest()
 		{
-			throw new NotImplementedException();
+			var target = new Thing( health: 1 );
+			var attacker = new Character();
+			attacker.DealDamageTo( target, 1 );
+			Assert.True( target.IsDestroyed );
 		}
 
 		[Fact]
