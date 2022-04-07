@@ -11,7 +11,10 @@ namespace RPGCombatKata.Test
 		[Fact]
 		public void CharsCanDamageThings()
 		{
-			throw new NotImplementedException();
+			var thing = new Thing( 2000 );
+			var attacker = new Character();
+			attacker.DealDamageTo( thing, 1 );
+			Assert.Equal( 1999, thing.Health );
 		}
 
 		[Fact]

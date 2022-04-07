@@ -1,7 +1,7 @@
 ﻿namespace RPGCombatKata
 {
 
-	public class Character
+	public class Character : ITarget
 	{
 
 		public const int MaxHealth = 1000;
@@ -10,7 +10,9 @@
 
 		public const double MaxRangedFighterRange = 20.0;
 
-		public int Health { get; private set; }
+		public int TargetMaxHealth => MaxHealth;
+
+		public int Health { get; set; }
 
 		public int Level { get; init; }
 
@@ -37,9 +39,7 @@
 			Level = 1;
 		}
 
-		private bool IsInRangeFrom( Character attacker ) => attacker.DistanceTo( this ) <= attacker.MaxRange;
-
-		private int AdjustDamageFrom( Character attacker, int damage )
+		public int AdjustDamageFrom( Character attacker, int damage )
 		{
 			if ( Level - attacker.Level >= 5 )
 			{
@@ -52,60 +52,11 @@
 			return damage;
 		}
 
-		private void ReceiveDamageFrom( Character attacker, int damage )
-		{
+		public void DealDamageTo( ITarget defender, int damage ) => defender.ReceiveDamageFrom( this, damage );
 
-			if ( !IsInRangeFrom( attacker ) )
-			{
-				return;
-			}
+		public void ApplyHealingTo( ITarget patient, int health ) => patient.ReceiveHealingFrom( this, health );
 
-			if ( attacker.IsAlliesWith( this ) )
-			{
-				return;
-			}
-
-			damage = AdjustDamageFrom( attacker, damage );
-
-			if ( damage > Health )
-			{
-
-				Health = 0;
-			}
-			else
-			{
-				Health -= damage;
-			}
-
-		}
-
-		public void DealDamageTo( Character defender, int damage ) => defender.ReceiveDamageFrom( this, damage );
-
-		private void ReceiveHealingFrom( Character healer, int health )
-		{
-
-			if ( !IsAlliesWith( healer ) )
-			{
-				return;
-			}
-
-			if ( Alive )
-			{
-				if ( Health + health > MaxHealth )
-				{
-					Health = MaxHealth;
-				}
-				else
-				{
-					Health += health;
-				}
-			}
-
-		}
-
-		public void ApplyHealingTo( Character patient, int health ) => patient.ReceiveHealingFrom( this, health );
-
-		public double DistanceTo( Character character ) => character.Position.Subtract( Position ).Length;
+		public double DistanceTo( ITarget target ) => target.Position.Subtract( Position ).Length;
 
 		public void Join( params Faction[] factions ) => Join( (IEnumerable<Faction>)factions );
 
