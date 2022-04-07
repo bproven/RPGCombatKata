@@ -12,6 +12,8 @@ namespace RPGCombatKata
 
 		bool IsTarget { get; }
 
+		bool CanBeHealed { get; }
+
 		Point Position { get; }
 
 		int AdjustDamageFrom( Character attacker, int damage ) => damage;
@@ -55,21 +57,23 @@ namespace RPGCombatKata
 		public static void ReceiveHealingFrom( this ITarget target, Character healer, int health )
 		{
 
+			if ( !target.CanBeHealed )
+			{
+				return;
+			}
+
 			if ( !target.IsAlliesWith( healer ) )
 			{
 				return;
 			}
 
-			if ( target.Health > 0 )
+			if ( target.Health + health > target.TargetMaxHealth )
 			{
-				if ( target.Health + health > target.TargetMaxHealth )
-				{
-					target.Health = target.TargetMaxHealth;
-				}
-				else
-				{
-					target.Health += health;
-				}
+				target.Health = target.TargetMaxHealth;
+			}
+			else
+			{
+				target.Health += health;
 			}
 
 		}

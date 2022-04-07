@@ -38,9 +38,19 @@ namespace RPGCombatKata.Test
 		}
 
 		[Fact]
-		public void ThingsCantBeHealedTest()
+		public void ThingsCantBeHealedTest1()
 		{
-			throw new NotImplementedException();
+			var target = new Thing( 1 );
+			Assert.False( target.CanBeHealed );
+		}
+
+		[Fact]
+		public void ThingsCantBeHealedTest2()
+		{
+			var target = new Thing( 1 );
+			var healer = new Character();
+			healer.ApplyHealingTo( target, 1 );
+			Assert.Equal( 1, target.Health );
 		}
 
 		[Fact]
