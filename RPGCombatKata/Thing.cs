@@ -24,6 +24,8 @@
 
 		public bool IsDestroyed => Health == 0;
 
+		public string Name { get; init; } = string.Empty;
+
 		public int AdjustDamageFrom( ITarget attacker, int damage ) => damage;
 
 		public Thing( int health = MaxHealth )

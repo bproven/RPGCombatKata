@@ -22,6 +22,8 @@
 
 		public bool IsNeutral => !Factions.Any();
 
+		public string Name => "Character";
+
 		public int Level { get; init; }
 
 		public bool Alive => Health > 0;

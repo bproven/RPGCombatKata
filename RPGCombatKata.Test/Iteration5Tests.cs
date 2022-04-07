@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 using Xunit;
 
 namespace RPGCombatKata.Test
@@ -89,9 +88,23 @@ namespace RPGCombatKata.Test
 		}
 
 		[Fact]
-		public void YouMayCreateATreeWith2000HealthTest()
+		public void YouMayCreateATreeWith2000HealthTest1()
 		{
-			throw new NotImplementedException();
+			var thing = new Thing( health: 2000 )
+			{
+				Name = "Tree",
+			};
+			Assert.Equal( "Tree", thing.Name );
+		}
+
+		[Fact]
+		public void YouMayCreateATreeWith2000HealthTest2()
+		{
+			var thing = new Thing( health: 2000 )
+			{
+				Name = "Tree",
+			};
+			Assert.Equal( 2000, thing.Health );
 		}
 
 	}

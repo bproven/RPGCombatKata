@@ -24,6 +24,8 @@ namespace RPGCombatKata
 
 		bool IsNeutral { get; }
 
+		string Name { get; }
+
 		int AdjustDamageFrom( ITarget attacker, int damage );
 
 		bool IsAlliesWith( ITarget character ) => false;
