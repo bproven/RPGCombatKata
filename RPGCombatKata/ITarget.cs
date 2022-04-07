@@ -10,15 +10,13 @@ namespace RPGCombatKata
 
 		int Health { get; set; }
 
-		bool IsTarget => true;
-
-		bool CanBeHealed => false;
+		bool IsTarget { get; }
 
 		Point Position { get; }
 
 		int AdjustDamageFrom( Character attacker, int damage ) => damage;
 
-		bool IsAlliesWith( Character attacker ) => false;
+		bool IsAlliesWith( Character character ) => false;
 
 	}
 

@@ -9,7 +9,7 @@ namespace RPGCombatKata.Test
 	{
 
 		[Fact]
-		public void CharsCanDamageThings()
+		public void CharsCanDamageThingsTest()
 		{
 			var thing = new Thing( 2000 );
 			var attacker = new Character();
@@ -18,43 +18,57 @@ namespace RPGCombatKata.Test
 		}
 
 		[Fact]
-		public void AnythingWithHealthIsATarget()
+		public void CharacterWithHealthIsATargetTest()
+		{
+			var target = new Character
+			{
+				Health = 1,
+			};
+			Assert.True( target.IsTarget );
+		}
+
+		[Fact]
+		public void ThingWithHealthIsATargetTest()
+		{
+			var target = new Thing
+			{
+				Health = 1,
+			};
+			Assert.True( target.IsTarget );
+		}
+
+		[Fact]
+		public void ThingsCantBeHealedTest()
 		{
 			throw new NotImplementedException();
 		}
 
 		[Fact]
-		public void ThingsCantBeHealed()
+		public void ThingsDontDealDamageTest()
 		{
 			throw new NotImplementedException();
 		}
 
 		[Fact]
-		public void ThingsDontDealDamage()
+		public void ThingsDoNotBelongToFactionsTest()
 		{
 			throw new NotImplementedException();
 		}
 
 		[Fact]
-		public void ThingsDoNotBelongToFactions()
+		public void ThingsAreNeutralTest()
 		{
 			throw new NotImplementedException();
 		}
 
 		[Fact]
-		public void ThingsAreNeutral()
+		public void ThingsReducedToZeroHealthAreDestroyedTest()
 		{
 			throw new NotImplementedException();
 		}
 
 		[Fact]
-		public void ThingsReducedToZeroHealthAreDestroyed()
-		{
-			throw new NotImplementedException();
-		}
-
-		[Fact]
-		public void YouMayCreateATreeWith2000Health()
+		public void YouMayCreateATreeWith2000HealthTest()
 		{
 			throw new NotImplementedException();
 		}

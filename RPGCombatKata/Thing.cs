@@ -10,6 +10,8 @@
 
 		public int Health { get; set; }
 
+		public bool IsTarget => Health > 0;
+
 		public Point Position { get; private set; } = new Point { X = 0.0, Y = 0.0 };
 
 		public Thing( int health = MaxHealth )

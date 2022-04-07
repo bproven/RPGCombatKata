@@ -14,6 +14,8 @@
 
 		public int Health { get; set; }
 
+		public bool IsTarget => Health > 0;
+
 		public int Level { get; init; }
 
 		public bool Alive => Health > 0;
