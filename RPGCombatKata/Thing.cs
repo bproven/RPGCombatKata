@@ -18,7 +18,9 @@
 
 		public Point Position { get; private set; } = new Point { X = 0.0, Y = 0.0 };
 
-		public ISet<Faction> Factions { get; } = new HashSet<Faction>();
+		public IReadOnlySet<Faction> Factions { get; } = new HashSet<Faction>();
+
+		public bool IsNeutral => !Factions.Any();
 
 		public int AdjustDamageFrom( ITarget attacker, int damage ) => damage;
 

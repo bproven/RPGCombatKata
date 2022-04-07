@@ -20,6 +20,8 @@
 
 		public bool CanDealDamage => Health > 0;
 
+		public bool IsNeutral => !Factions.Any();
+
 		public int Level { get; init; }
 
 		public bool Alive => Health > 0;
@@ -30,7 +32,9 @@
 
 		public CharacterType Type { get; init; } = CharacterType.MeleeFighter;
 
-		public ISet<Faction> Factions { get; } = new HashSet<Faction>();
+		private readonly HashSet<Faction> _factions = new HashSet<Faction>();
+
+		public IReadOnlySet<Faction> Factions => _factions;
 
 		public double MaxRange => Type switch
 		{
@@ -71,7 +75,7 @@
 		{
 			foreach ( Faction f in factions )
 			{
-				Factions.Add( f );
+				_factions.Add( f );
 			}
 		}
 

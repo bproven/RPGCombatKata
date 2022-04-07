@@ -18,9 +18,11 @@ namespace RPGCombatKata
 
 		Point Position { get; }
 
-		public double MaxRange => 0.0;
+		double MaxRange => 0.0;
 
-		ISet<Faction> Factions { get; }
+		IReadOnlySet<Faction> Factions { get; }
+
+		bool IsNeutral { get; }
 
 		int AdjustDamageFrom( ITarget attacker, int damage );
 

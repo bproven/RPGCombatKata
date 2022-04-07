@@ -68,13 +68,15 @@ namespace RPGCombatKata.Test
 		[Fact]
 		public void ThingsDoNotBelongToFactionsTest()
 		{
-			throw new NotImplementedException();
+			var thing = new Thing();
+			Assert.Empty( thing.Factions );
 		}
 
 		[Fact]
 		public void ThingsAreNeutralTest()
 		{
-			throw new NotImplementedException();
+			var thing = new Thing();
+			Assert.True( thing.IsNeutral );
 		}
 
 		[Fact]
