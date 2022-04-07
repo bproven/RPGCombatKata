@@ -14,6 +14,8 @@
 
 		public bool IsTarget => Health > 0;
 
+		public bool CanDealDamage => false;
+
 		public Point Position { get; private set; } = new Point { X = 0.0, Y = 0.0 };
 
 		public ISet<Faction> Factions { get; } = new HashSet<Faction>();

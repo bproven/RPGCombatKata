@@ -14,6 +14,8 @@ namespace RPGCombatKata
 
 		bool CanBeHealed { get; }
 
+		bool CanDealDamage { get; }
+
 		Point Position { get; }
 
 		public double MaxRange => 0.0;
@@ -35,6 +37,11 @@ namespace RPGCombatKata
 
 		public static void ReceiveDamageFrom( this ITarget target, ITarget attacker, int damage )
 		{
+
+			if ( !attacker.CanDealDamage )
+			{
+				return;
+			}
 
 			if ( !target.IsInRangeFrom( attacker ) )
 			{

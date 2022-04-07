@@ -56,7 +56,13 @@ namespace RPGCombatKata.Test
 		[Fact]
 		public void ThingsDontDealDamageTest()
 		{
-			throw new NotImplementedException();
+			var attacker = new Thing();
+			var defender = new Character
+			{
+				Health = 2,
+			};
+			attacker.DealDamageTo( defender, 1 );
+			Assert.Equal( 2, defender.Health );
 		}
 
 		[Fact]
